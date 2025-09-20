@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerBehaviour : MonoBehaviour
 {
@@ -69,6 +70,29 @@ public class PlayerBehaviour : MonoBehaviour
     private Vector3 escaladaFin;
     private float velocidadEscalada = 2f;
     private float progresoEscalada = 0f;
+
+
+    [Header("Vida del Jugador")]
+    public int maxHealth = 5;
+    private int currentHealth;
+
+    void Awake()
+    {
+        currentHealth = maxHealth;
+    }
+
+    public void TakeDamage(int damage = 1)
+    {
+        currentHealth -= damage;
+        Debug.Log("Jugador recibió daño. Vida actual: " + currentHealth);
+
+        if (currentHealth <= 0)
+        {
+            print("Se murio");
+            SceneManager.LoadScene("Menu");
+
+        }
+    }
 
 
     void Start()
