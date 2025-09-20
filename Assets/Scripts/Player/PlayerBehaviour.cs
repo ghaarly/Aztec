@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class PlayerBehaviour : MonoBehaviour
+public class PlayerBehaviour: MonoBehaviour
 {
     [Header("Movimiento y Física")]
     public float speed = 4f;
@@ -31,25 +31,28 @@ public class PlayerBehaviour : MonoBehaviour
     public float staminaUsePerSecond = 1.2f;
     public float staminaRecoveryPerSecond = 2f;
 
-    [Header("Arco")]
-    public Transform shootPoint;
-    public GameObject arrowPrefab;
-    public float aimSensitivity = 30f;
-    public float maxForce = 30f;
-    public float chargeSpeed = 20f;
-
     [Header("Ocultamiento")]
     public LayerMask canHide;
     public LayerMask autoHide;
-    public GameObject hidingEffect; // Global Volume effect
+    public GameObject hidingEffect;
     private bool inCrouchHideZone = false;
     private bool inAutoHideZone = false;
 
     [Header("Interacción")]
     public KeyCode interactKey = KeyCode.E;
     public float interactDistance = 3f;
-    public LayerMask interactMask = ~0; 
+    public LayerMask interactMask = ~0;
 
+    [Header("Escalada")]
+    private bool enEscalada = false;
+    private Vector3 escaladaInicio;
+    private Vector3 escaladaFin;
+    private float velocidadEscalada = 2f;
+    private float progresoEscalada = 0f;
+
+    [Header("Vida del Jugador")]
+    public int maxHealth = 5;
+    private int currentHealth;
 
     private Rigidbody rb;
     private CapsuleCollider capsule;
@@ -60,40 +63,11 @@ public class PlayerBehaviour : MonoBehaviour
     private float pitch = 0f;
     private float stamina;
     private bool canRun = true;
-    private bool isAiming = false;
-    private float currentForce = 0f;
-    private float originalSensitivity;
-
-    [Header("Escalada")]
-    private bool enEscalada = false;
-    private Vector3 escaladaInicio;
-    private Vector3 escaladaFin;
-    private float velocidadEscalada = 2f;
-    private float progresoEscalada = 0f;
-
-
-    [Header("Vida del Jugador")]
-    public int maxHealth = 5;
-    private int currentHealth;
 
     void Awake()
     {
         currentHealth = maxHealth;
     }
-
-    public void TakeDamage(int damage = 1)
-    {
-        currentHealth -= damage;
-        Debug.Log("Jugador recibió daño. Vida actual: " + currentHealth);
-
-        if (currentHealth <= 0)
-        {
-            print("Se murio");
-            SceneManager.LoadScene("Menu");
-
-        }
-    }
-
 
     void Start()
     {
@@ -115,13 +89,13 @@ public class PlayerBehaviour : MonoBehaviour
             MovimientoEnEscalada();
             return;
         }
+
         HandleCamera();
         CheckGround();
         HandleMovement();
         HandleJump();
         HandleCrouch();
         HandleStamina();
-        HandleAim();
         HandleInteract();
     }
 
@@ -184,14 +158,14 @@ public class PlayerBehaviour : MonoBehaviour
             isCrouching = !isCrouching;
             UpdateInvisibility();
 
-            if (!isCrouching) // Trying to stand up, check if there's room
+            if (!isCrouching)
             {
                 Vector3 bottom = transform.position + Vector3.up * crouchHeight * 0.5f;
                 Vector3 top = transform.position + Vector3.up * (height - 0.1f);
                 float radius = capsule.radius * 0.9f;
 
                 Collider[] hits = Physics.OverlapCapsule(bottom, top, radius, groundMask, QueryTriggerInteraction.Ignore);
-                if (hits.Length > 0) // Something blocking head
+                if (hits.Length > 0)
                 {
                     isCrouching = true;
                 }
@@ -218,57 +192,6 @@ public class PlayerBehaviour : MonoBehaviour
         stamina = Mathf.Clamp(stamina, 0f, maxStamina);
         canRun = stamina > 0f;
     }
-
-    void HandleAim()
-    {
-        if (Input.GetMouseButtonDown(1)) // Right click
-        {
-            isAiming = true;
-            originalSensitivity = mouseSensitivity;
-            mouseSensitivity = aimSensitivity;
-            currentForce = 0f;
-        }
-
-        if (Input.GetMouseButtonUp(1))
-        {
-            isAiming = false;
-            mouseSensitivity = originalSensitivity;
-            currentForce = 0f;
-        }
-
-        if (isAiming)
-        {
-            float mouseY = Input.GetAxis("Mouse Y");
-
-            if (mouseY < 0)
-            {
-                currentForce += -mouseY * chargeSpeed * Time.deltaTime;
-                currentForce = Mathf.Clamp(currentForce, 0f, maxForce);
-            }
-
-            if (Input.GetMouseButtonDown(0)) // Left click to shoot
-            {
-                ShootArrow(currentForce);
-                currentForce = 0f;
-                isAiming = false;
-                mouseSensitivity = originalSensitivity;
-            }
-        }
-    }
-
-    void ShootArrow(float force)
-    {
-        if (arrowPrefab == null || shootPoint == null) return;
-
-        GameObject arrow = Instantiate(arrowPrefab, shootPoint.position, shootPoint.rotation);
-        Rigidbody arrowRb = arrow.GetComponent<Rigidbody>();
-
-        if (arrowRb != null)
-        {
-            arrowRb.velocity = shootPoint.forward * force;
-        }
-    }
-
     void HandleInteract()
     {
         if (Input.GetKeyDown(interactKey))
@@ -339,7 +262,6 @@ public class PlayerBehaviour : MonoBehaviour
         progresoEscalada = 0f;
         enEscalada = true;
 
-        // Desactivar física que moleste
         rb.velocity = Vector3.zero;
         rb.isKinematic = true;
     }
@@ -354,8 +276,16 @@ public class PlayerBehaviour : MonoBehaviour
             rb.isKinematic = false;
         }
     }
+    public void TakeDamage(int damage = 1)
+    {
+        currentHealth -= damage;
+        Debug.Log("Jugador recibió daño. Vida actual: " + currentHealth);
 
-
+        if (currentHealth <= 0)
+        {
+            SceneManager.LoadScene("Menu");
+        }
+    }
     void OnDrawGizmosSelected()
     {
         if (groundCheck != null)
@@ -365,3 +295,4 @@ public class PlayerBehaviour : MonoBehaviour
         }
     }
 }
+

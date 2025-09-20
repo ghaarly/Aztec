@@ -131,12 +131,12 @@ MonoBehaviour:
   m_RequiresColorTexture: 0
   m_Version: 2
   m_TaaSettings:
-    m_Quality: 3
-    m_FrameInfluence: 0.1
-    m_JitterScale: 1
-    m_MipBias: 0
-    m_VarianceClampScale: 0.9
-    m_ContrastAdaptiveSharpening: 0
+    quality: 3
+    frameInfluence: 0.1
+    jitterScale: 1
+    mipBias: 0
+    varianceClampScale: 0.9
+    contrastAdaptiveSharpening: 0
 --- !u!1 &203652118948884435
 GameObject:
   m_ObjectHideFlags: 0
@@ -203,7 +203,8 @@ GameObject:
   - component: {fileID: 5749811310865208059}
   - component: {fileID: 5290395152681625540}
   - component: {fileID: 117594451191393858}
-  - component: {fileID: 5889351403839833938}
+  - component: {fileID: 5133748266923793252}
+  - component: {fileID: 832456383712834125}
   m_Layer: 0
   m_Name: Jugador
   m_TagString: Untagged
@@ -226,7 +227,6 @@ Transform:
   m_Children:
   - {fileID: 5004265796206534161}
   - {fileID: 8969592596072659215}
-  - {fileID: 5119807432059824422}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &7789010106971040295
@@ -329,7 +329,7 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0.9, z: 0}
---- !u!114 &5889351403839833938
+--- !u!114 &5133748266923793252
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -338,162 +338,60 @@ MonoBehaviour:
   m_GameObject: {fileID: 6221472841539044058}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4396eb25f29bf654b82c278a7afde6a3, type: 3}
+  m_Script: {fileID: 11500000, guid: 29d86c77331f6854c864af74ab6c2de9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 5
-  _runSpeed: 10
-  _crouchSpeed: 1.55
-  _jumpHeight: 8
-  _groundMask:
+  speed: 6
+  runSpeed: 10
+  crouchSpeed: 0.5
+  jumpHeight: 1.2
+  groundMask:
     serializedVersion: 2
-    m_Bits: 8
-  _groundCheck: {fileID: 8969592596072659215}
-  _checkRadius: 0.25
-  _extraGroundDistance: 0.05
-  _height: 1.8
-  _crouchHeigth: 1
-  _timeToCrouch: 8
-  _centerOffset: {x: 0, y: -0.9, z: 0}
-  _camara: {fileID: 5004265796206534161}
-  _camHeightOffset: -1.2
-  _mouseSen: 250
-  _maxPitch: 80
-  _blockCursor: 1
-  _tiltMaxDegree: 15
-  _tiltSpeed: 8
-  _maxStamina: 5
-  _staminaUsePerSecond: 1.2
-  _staminaRecoveryPerSecond: 2
-  puntoDisparo: {fileID: 5119807432059824422}
-  flechaPrefab: {fileID: 206920453428922742, guid: c69e5a2c91110cb429213f45024d066f,
-    type: 3}
-  sensibilidadApuntado: 21.5
-  fuerzaMaxima: 5
-  velocidadCarga: 10
-  _invisibleZoneMask:
+    m_Bits: 4294967295
+  groundCheck: {fileID: 0}
+  checkRadius: 0.25
+  extraGroundDistance: 0.05
+  height: 1.8
+  crouchHeight: 1
+  timeToCrouch: 8
+  centerOffset: {x: 0, y: 0, z: 0}
+  cameraTransform: {fileID: 0}
+  cameraHeightOffset: 0
+  mouseSensitivity: 100
+  maxPitch: 80
+  blockCursor: 1
+  maxStamina: 5
+  staminaUsePerSecond: 1.2
+  staminaRecoveryPerSecond: 2
+  canHide:
     serializedVersion: 2
-    m_Bits: 64
-  _efectoInvisibilidad: {fileID: 0}
-  _esInvisible: 0
---- !u!1001 &657145937620048592
-PrefabInstance:
+    m_Bits: 0
+  autoHide:
+    serializedVersion: 2
+    m_Bits: 0
+  hidingEffect: {fileID: 0}
+  interactKey: 101
+  interactDistance: 3
+  interactMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  maxHealth: 5
+--- !u!114 &832456383712834125
+MonoBehaviour:
   m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 368585898583195678}
-    m_Modifications:
-    - target: {fileID: 3414295580537660276, guid: 0dbf540939b32e740afdd1233132cde7,
-        type: 3}
-      propertyPath: m_Name
-      value: Arco
-      objectReference: {fileID: 0}
-    - target: {fileID: 5626002006704108534, guid: 0dbf540939b32e740afdd1233132cde7,
-        type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.91350067
-      objectReference: {fileID: 0}
-    - target: {fileID: 5626002006704108534, guid: 0dbf540939b32e740afdd1233132cde7,
-        type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.85052
-      objectReference: {fileID: 0}
-    - target: {fileID: 5626002006704108534, guid: 0dbf540939b32e740afdd1233132cde7,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0.3466234
-      objectReference: {fileID: 0}
-    - target: {fileID: 5626002006704108534, guid: 0dbf540939b32e740afdd1233132cde7,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.12000309
-      objectReference: {fileID: 0}
-    - target: {fileID: 5626002006704108534, guid: 0dbf540939b32e740afdd1233132cde7,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0.17700005
-      objectReference: {fileID: 0}
-    - target: {fileID: 5626002006704108534, guid: 0dbf540939b32e740afdd1233132cde7,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.9787828
-      objectReference: {fileID: 0}
-    - target: {fileID: 5626002006704108534, guid: 0dbf540939b32e740afdd1233132cde7,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0.07970125
-      objectReference: {fileID: 0}
-    - target: {fileID: 5626002006704108534, guid: 0dbf540939b32e740afdd1233132cde7,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0.16674508
-      objectReference: {fileID: 0}
-    - target: {fileID: 5626002006704108534, guid: 0dbf540939b32e740afdd1233132cde7,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0.088476054
-      objectReference: {fileID: 0}
-    - target: {fileID: 5626002006704108534, guid: 0dbf540939b32e740afdd1233132cde7,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: -10.692
-      objectReference: {fileID: 0}
-    - target: {fileID: 5626002006704108534, guid: 0dbf540939b32e740afdd1233132cde7,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 18.532
-      objectReference: {fileID: 0}
-    - target: {fileID: 5626002006704108534, guid: 0dbf540939b32e740afdd1233132cde7,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 8.581
-      objectReference: {fileID: 0}
-    - target: {fileID: 8182163364906139857, guid: 0dbf540939b32e740afdd1233132cde7,
-        type: 3}
-      propertyPath: flechaPrefab
-      value: 
-      objectReference: {fileID: 206920453428922742, guid: c69e5a2c91110cb429213f45024d066f,
-        type: 3}
-    - target: {fileID: 8182163364906139857, guid: 0dbf540939b32e740afdd1233132cde7,
-        type: 3}
-      propertyPath: fuerzaMaxima
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 8182163364906139857, guid: 0dbf540939b32e740afdd1233132cde7,
-        type: 3}
-      propertyPath: fuerzaMinima
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8182163364906139857, guid: 0dbf540939b32e740afdd1233132cde7,
-        type: 3}
-      propertyPath: puntoDisparo
-      value: 
-      objectReference: {fileID: 9034678204594114590}
-    - target: {fileID: 8182163364906139857, guid: 0dbf540939b32e740afdd1233132cde7,
-        type: 3}
-      propertyPath: camaraJugador
-      value: 
-      objectReference: {fileID: 6440244109930881140}
-    - target: {fileID: 8182163364906139857, guid: 0dbf540939b32e740afdd1233132cde7,
-        type: 3}
-      propertyPath: distanciaMaximaMouse
-      value: 1.5
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 0dbf540939b32e740afdd1233132cde7, type: 3}
---- !u!4 &5119807432059824422 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5626002006704108534, guid: 0dbf540939b32e740afdd1233132cde7,
-    type: 3}
-  m_PrefabInstance: {fileID: 657145937620048592}
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &9034678204594114590 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8394491221332249294, guid: 0dbf540939b32e740afdd1233132cde7,
-    type: 3}
-  m_PrefabInstance: {fileID: 657145937620048592}
-  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6221472841539044058}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 410d99d4d79f0044d9442cee32ec80eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shootPoint: {fileID: 0}
+  arrowPrefab: {fileID: 0}
+  aimSensitivity: 30
+  maxForce: 30
+  chargeSpeed: 20
+  cameraTransform: {fileID: 0}
+  playerBehaviour: {fileID: 0}
