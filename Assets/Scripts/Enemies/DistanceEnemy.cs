@@ -1,0 +1,59 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+/*
+public class DistanceEnemy : MonoBehaviour
+{
+
+    public void Update()
+    {
+        if (!PatrolMode)
+        {
+            if (PatrolC == null)
+            {
+                PatrolC = StartCoroutine(ChaseCoroutine(GameManager.Instance.player.transform.position));
+            }
+            if (ShootC == null)
+            {
+                ShootC = StartCoroutine(ShootCoroutine());
+            }
+        }
+        else
+        {
+            if (PatrolC == null)
+            {
+                PatrolC = StartCoroutine(PatrolCoroutine());
+            }
+
+            CheckDistanceWaypoint();
+        }
+        if (DetectPLayer(transform.position, radius))
+        {
+            PatrolMode = false;
+        }
+        else
+        {
+            PatrolMode = true;
+        }
+
+    }
+    public Transform shootPos;
+    public BulletEnemy bullet;
+
+    protected Coroutine ShootC;
+    protected IEnumerator ShootCoroutine()
+    {
+        Shoot();
+        yield return new WaitForSeconds(1f);
+        ShootC = null;
+    }
+
+    public void Shoot()
+    {
+        BulletEnemy myBullet = Instantiate(bullet, shootPos.position, Quaternion.identity);
+        myBullet.transform.forward = transform.forward;
+        Destroy(myBullet.gameObject, 3);
+    }
+
+}
+*/
