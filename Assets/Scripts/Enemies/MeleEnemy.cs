@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-/*
+
 public class MeleEnemy : Enemy
 {
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.TryGetComponent(out PlayerMovement player))
+        if (collision.gameObject.TryGetComponent(out PlayerBehaviour player))
         {
             player.TakeDamage();
         }
@@ -18,7 +18,7 @@ public class MeleEnemy : Enemy
         {
             if (PatrolC == null)
             {
-                PatrolC = StartCoroutine(ChaseCoroutine(GameManager.Instance.player.transform.position));
+                PatrolC = StartCoroutine(ChaseCoroutine(GameManagment.Instance.player.transform.position));
             }
         }
         else
@@ -42,4 +42,4 @@ public class MeleEnemy : Enemy
     }
 
 }
-*/
+
