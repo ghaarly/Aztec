@@ -10,6 +10,7 @@ public class ArrowRefill : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
+
         PlayerShooting player = other.GetComponent<PlayerShooting>();
 
         if (player != null && !used)
@@ -23,5 +24,7 @@ public class ArrowRefill : MonoBehaviour
                 Destroy(gameObject); 
             }
         }
+
     }
-}
+
+  }
