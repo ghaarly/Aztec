@@ -1,5 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+
 
 public class PlayerBehaviour: MonoBehaviour
 {
@@ -50,9 +52,10 @@ public class PlayerBehaviour: MonoBehaviour
     private float velocidadEscalada = 2f;
     private float progresoEscalada = 0f;
 
-    [Header("Vida del Jugador")]
-    public int maxHealth = 5;
-    private int currentHealth;
+    [SerializeField] private int maxLife;
+    [SerializeField] private Image lifeImge;
+    private int currentLife;
+
 
     private Rigidbody rb;
     private CapsuleCollider capsule;
@@ -63,12 +66,9 @@ public class PlayerBehaviour: MonoBehaviour
     private float pitch = 0f;
     private float stamina;
     private bool canRun = true;
-
-    void Awake()
-    {
-        currentHealth = maxHealth;
-    }
-
+    
+    
+    
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -276,14 +276,14 @@ public class PlayerBehaviour: MonoBehaviour
             rb.isKinematic = false;
         }
     }
-    public void TakeDamage(int damage = 1)
+    public void TakeDamage()
     {
-        currentHealth -= damage;
-        Debug.Log("Jugador recibió daño. Vida actual: " + currentHealth);
-
-        if (currentHealth <= 0)
+        currentLife -= 20;
+        lifeImge.fillAmount = (float)currentLife / maxLife;
+        if (currentLife <= 0)
         {
-            SceneManager.LoadScene("Menu");
+            print("Se murio");
+            SceneManager.LoadScene("menu");
         }
     }
     void OnDrawGizmosSelected()

@@ -19,6 +19,8 @@ public class ArrowProjectile : MonoBehaviour
         if (collision.gameObject.TryGetComponent(out Enemy enemy))
         {
             enemy.TakeDamage(); // le baja vida
+            Destroy(gameObject);
+
         }
 
         // En cualquier caso, destruir la flecha al impactar
