@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-/*
+
 public class BulleteEnemy : MonoBehaviour
 {
 
@@ -14,8 +14,8 @@ public class BulleteEnemy : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        PlayerMovement player;
-        if (other.TryGetComponent<PlayerMovement>(out player))
+        PlayerBehaviour player;
+        if (other.TryGetComponent<PlayerBehaviour>(out player))
         {
             player.TakeDamage();
             Destroy(gameObject);
@@ -25,4 +25,3 @@ public class BulleteEnemy : MonoBehaviour
 
 
 }
-*/

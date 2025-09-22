@@ -6,7 +6,7 @@ using UnityEngine.AI;
 public class Enemy : MonoBehaviour
 {
     [SerializeField] private int enemyLife;
-    [SerializeField] private NavMeshAgent agent;
+    [SerializeField] public NavMeshAgent agent;
     [SerializeField] protected float radius;
 
 
@@ -38,7 +38,7 @@ public class Enemy : MonoBehaviour
         if (index >= waypoints.Length) index = 0;
     }
 
-
+    public Animator anim;
 
     protected Coroutine PatrolC;
     protected IEnumerator ChaseCoroutine(Vector3 target)

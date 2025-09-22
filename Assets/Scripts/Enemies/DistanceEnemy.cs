@@ -1,9 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-/*
-public class DistanceEnemy : MonoBehaviour
-{
+
+public class DistanceEnemy : Enemy
+{/*
 
     public void Update()
     {
@@ -11,7 +11,7 @@ public class DistanceEnemy : MonoBehaviour
         {
             if (PatrolC == null)
             {
-                PatrolC = StartCoroutine(ChaseCoroutine(GameManager.Instance.player.transform.position));
+                PatrolC = StartCoroutine(ChaseCoroutine(GameManagment.Instance.player.transform.position));
             }
             if (ShootC == null)
             {
@@ -54,6 +54,6 @@ public class DistanceEnemy : MonoBehaviour
         myBullet.transform.forward = transform.forward;
         Destroy(myBullet.gameObject, 3);
     }
+      */
 
 }
-*/

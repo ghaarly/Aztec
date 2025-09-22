@@ -283,7 +283,7 @@ public class PlayerBehaviour: MonoBehaviour
         if (currentLife <= 0)
         {
             print("Se murio");
-            SceneManager.LoadScene("menu");
+            SceneManager.LoadScene("Menu");
         }
     }
     void OnDrawGizmosSelected()

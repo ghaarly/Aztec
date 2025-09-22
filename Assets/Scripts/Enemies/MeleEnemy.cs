@@ -39,6 +39,7 @@ public class MeleEnemy : Enemy
             PatrolMode = true;
         }
 
+        anim.SetFloat("speed", agent.velocity.magnitude);
     }
 
 }
