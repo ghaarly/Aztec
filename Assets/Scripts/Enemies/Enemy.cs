@@ -13,6 +13,7 @@ public class Enemy : MonoBehaviour
 
     public void TakeDamage()
     {
+        Debug.Log("recibio dano");
         enemyLife--;
         if (enemyLife <= 0)
         {

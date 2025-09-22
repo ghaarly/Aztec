@@ -278,8 +278,9 @@ public class PlayerBehaviour: MonoBehaviour
     }
     public void TakeDamage()
     {
+        Debug.Log("Recibio dano");
         currentLife -= 20;
-        lifeImge.fillAmount = (float)currentLife / maxLife;
+        //lifeImge.fillAmount = (float)currentLife / maxLife;
         if (currentLife <= 0)
         {
             print("Se murio");

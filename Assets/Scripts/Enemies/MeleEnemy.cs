@@ -5,13 +5,10 @@ using UnityEngine;
 
 public class MeleEnemy : Enemy
 {
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.TryGetComponent(out PlayerBehaviour player))
-        {
-            player.TakeDamage();
-        }
-    }
+    
+    private Coroutine AttackC;
+
+
     public void Update()
     {
         if (!PatrolMode)
@@ -38,9 +35,23 @@ public class MeleEnemy : Enemy
         {
             PatrolMode = true;
         }
+        if (!PatrolMode && DetectPLayer(transform.position, 2f))
+        {
+            if (AttackC == null)
+            {
+                AttackC = StartCoroutine(Attack());
+            }
+        }
+
 
         anim.SetFloat("speed", agent.velocity.magnitude);
+        
     }
-
+    public IEnumerator Attack()
+    {
+        anim.SetTrigger("Attack");
+        yield return new WaitForSeconds(1f);
+        AttackC=null;
+    }
 }
 

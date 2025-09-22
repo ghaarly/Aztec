@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class DistanceEnemy : Enemy
-{/*
+{
 
     public void Update()
     {
@@ -35,10 +35,20 @@ public class DistanceEnemy : Enemy
         {
             PatrolMode = true;
         }
+        if (!PatrolMode && DetectPLayer(transform.position, 10f))
+        {
+            if (ShootC == null)
+            {
+                ShootC = StartCoroutine(ShootCoroutine());
+            }
+        }
+
+
+        anim.SetFloat("speed", agent.velocity.magnitude);
 
     }
     public Transform shootPos;
-    public BulletEnemy bullet;
+    public BulleteEnemy bullet;
 
     protected Coroutine ShootC;
     protected IEnumerator ShootCoroutine()
@@ -50,10 +60,11 @@ public class DistanceEnemy : Enemy
 
     public void Shoot()
     {
-        BulletEnemy myBullet = Instantiate(bullet, shootPos.position, Quaternion.identity);
+        anim.SetTrigger("Attack");
+        BulleteEnemy myBullet = Instantiate(bullet, shootPos.position, Quaternion.identity);
         myBullet.transform.forward = transform.forward;
         Destroy(myBullet.gameObject, 3);
     }
-      */
+      
 
 }
