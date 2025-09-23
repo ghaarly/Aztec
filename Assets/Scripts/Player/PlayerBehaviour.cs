@@ -276,6 +276,7 @@ public class PlayerBehaviour: MonoBehaviour
             rb.isKinematic = false;
         }
     }
+    //Vida Player
     public void TakeDamage()
     {
         Debug.Log("Recibio dano");
