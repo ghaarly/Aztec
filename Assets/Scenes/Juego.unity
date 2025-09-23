@@ -5859,7 +5859,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyLife: 1
   agent: {fileID: 1203257384}
-  radius: 20
+  radius: 0
   waypoints:
   - {fileID: 535989416}
   - {fileID: 85115668}
