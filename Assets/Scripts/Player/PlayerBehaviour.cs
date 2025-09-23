@@ -2,9 +2,14 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-
 public class PlayerBehaviour: MonoBehaviour
 {
+    [Header("Vida")]
+    [SerializeField] private int maxLife;
+    [SerializeField] private Image lifeImage;
+    [SerializeField] private int currentLife;
+    [SerializeField] private string deathScene;
+
     [Header("Movimiento y Física")]
     public float speed = 4f;
     public float runSpeed = 10f;
@@ -39,6 +44,8 @@ public class PlayerBehaviour: MonoBehaviour
     public GameObject hidingEffect;
     private bool inCrouchHideZone = false;
     private bool inAutoHideZone = false;
+    public bool IsCrouching => isCrouching;
+
 
     [Header("Interacción")]
     public KeyCode interactKey = KeyCode.E;
@@ -51,11 +58,7 @@ public class PlayerBehaviour: MonoBehaviour
     private Vector3 escaladaFin;
     private float velocidadEscalada = 2f;
     private float progresoEscalada = 0f;
-
-    [SerializeField] private int maxLife;
-    [SerializeField] private Image lifeImge;
-    private int currentLife;
-
+    
 
     private Rigidbody rb;
     private CapsuleCollider capsule;
@@ -65,23 +68,25 @@ public class PlayerBehaviour: MonoBehaviour
     private float yaw = 0f;
     private float pitch = 0f;
     private float stamina;
-    private bool canRun = true;
-    
-    
-    
+    private bool canRun = true;    
+  
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         capsule = GetComponent<CapsuleCollider>();
         stamina = maxStamina;
+        currentLife = maxLife; 
 
+        if (lifeImage != null)
+        {
+            lifeImage.fillAmount = 1f;
+        }
         if (blockCursor)
         {
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
         }
     }
-
     void Update()
     {
         if (enEscalada)
@@ -89,7 +94,7 @@ public class PlayerBehaviour: MonoBehaviour
             MovimientoEnEscalada();
             return;
         }
-
+        UpdateHealthBar();
         HandleCamera();
         CheckGround();
         HandleMovement();
@@ -98,7 +103,6 @@ public class PlayerBehaviour: MonoBehaviour
         HandleStamina();
         HandleInteract();
     }
-
     void HandleCamera()
     {
         float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
@@ -111,12 +115,10 @@ public class PlayerBehaviour: MonoBehaviour
         transform.rotation = Quaternion.Euler(0f, yaw, 0f);
         cameraTransform.localRotation = Quaternion.Euler(pitch, 0f, 0f);
     }
-
     void CheckGround()
     {
         isGrounded = Physics.CheckSphere(groundCheck.position, checkRadius + extraGroundDistance, groundMask);
     }
-
     void HandleMovement()
     {
         float h = Input.GetAxis("Horizontal");
@@ -141,7 +143,6 @@ public class PlayerBehaviour: MonoBehaviour
         velocity.z = desiredVelocity.z;
         rb.velocity = velocity;
     }
-
     void HandleJump()
     {
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded && !isCrouching)
@@ -181,7 +182,6 @@ public class PlayerBehaviour: MonoBehaviour
         camPos.y = Mathf.Lerp(camPos.y, targetCamHeight, Time.deltaTime * timeToCrouch);
         cameraTransform.localPosition = camPos;
     }
-
     void HandleStamina()
     {
         if (!Input.GetKey(KeyCode.LeftShift) || moveInput.magnitude < 0.1f || !isGrounded)
@@ -209,7 +209,6 @@ public class PlayerBehaviour: MonoBehaviour
             }
         }
     }
-
     void OnTriggerEnter(Collider other)
     {
         if (IsInLayerMask(other.gameObject, canHide))
@@ -276,17 +275,23 @@ public class PlayerBehaviour: MonoBehaviour
             rb.isKinematic = false;
         }
     }
-    //Vida Player
-    public void TakeDamage()
+    public void TakeDamage(int damage)
     {
-        Debug.Log("Recibio dano");
-        currentLife -= 20;
-        //lifeImge.fillAmount = (float)currentLife / maxLife;
+        Debug.Log("Recibio daño: " + damage);
+        currentLife -= damage;
+        currentLife = Mathf.Clamp(currentLife, 0, maxLife); 
+        UpdateHealthBar();
+
         if (currentLife <= 0)
         {
-            print("Se murio");
-            SceneManager.LoadScene("Menu");
+            Debug.Log("Se murió");
+            SceneManager.LoadScene(deathScene);
         }
+    }
+    void UpdateHealthBar()
+    {
+        float fillAmount = (float)currentLife / maxLife;        
+        lifeImage.fillAmount = fillAmount;
     }
     void OnDrawGizmosSelected()
     {

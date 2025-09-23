@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class AttackHitbox : MonoBehaviour
 {
+    [SerializeField] public int damage = 10;
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.TryGetComponent(out PlayerBehaviour player))
         {
-            player.TakeDamage();
+            player.TakeDamage(damage);
         }
     }
 }

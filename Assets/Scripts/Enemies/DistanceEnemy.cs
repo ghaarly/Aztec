@@ -48,7 +48,7 @@ public class DistanceEnemy : Enemy
 
     }
     public Transform shootPos;
-    public BulleteEnemy bullet;
+    public BulletEnemy bullet;
 
     protected Coroutine ShootC;
     protected IEnumerator ShootCoroutine()
@@ -61,7 +61,7 @@ public class DistanceEnemy : Enemy
     public void Shoot()
     {
         anim.SetTrigger("Attack");
-        BulleteEnemy myBullet = Instantiate(bullet, shootPos.position, Quaternion.identity);
+        BulletEnemy myBullet = Instantiate(bullet, shootPos.position, Quaternion.identity);
         myBullet.transform.forward = transform.forward;
         Destroy(myBullet.gameObject, 3);
     }

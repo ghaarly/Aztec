@@ -10,6 +10,13 @@ public class PlayerShooting : MonoBehaviour
     public float maxForce = 30f;
     public float chargeSpeed = 20f;
 
+    [Header("Modelo del Arco")]
+    public GameObject bowModel; 
+    public Transform aimPosition; 
+    public Transform restPosition; 
+    public float bowTransitionSpeed = 5f;
+    public Transform crouchPosition; 
+
     [Header("Flechas")]
     public int maxArrows = 10;
     public int currentArrows = 10;
@@ -32,9 +39,62 @@ public class PlayerShooting : MonoBehaviour
     {
         HandleAim();
     }
+    void LateUpdate()
+    {
+        UpdateBowPosition();
+    }
+    void UpdateBowPosition()
+    {
+        if (bowModel == null || aimPosition == null || restPosition == null || crouchPosition == null) return;
+        Transform target = restPosition;
+        if (playerBehaviour.IsCrouching)
+        {
+            target = crouchPosition;
+        }
+        else if (isAiming)
+        {
+            target = aimPosition;
+        }
+        bowModel.transform.position = Vector3.Lerp(
+            bowModel.transform.position,
+            target.position,
+            Time.deltaTime * bowTransitionSpeed
+        );
+        bowModel.transform.rotation = Quaternion.Lerp(
+            bowModel.transform.rotation,
+            target.rotation,
+            Time.deltaTime * bowTransitionSpeed
+        );
+    }
+
 
     void HandleAim()
     {
+        if (isAiming && !playerBehaviour.IsCrouching) 
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                isCharging = true;
+                currentForce = 0f;
+                UpdateChargeUI(true);
+            }
+
+            if (isCharging && Input.GetMouseButton(0))
+            {
+                currentForce += chargeSpeed * Time.deltaTime;
+                currentForce = Mathf.Clamp(currentForce, 0f, maxForce);
+                UpdateChargeUI(true);
+            }
+
+            if (isCharging && Input.GetMouseButtonUp(0))
+            {
+                ShootArrow(currentForce);
+                currentForce = 0f;
+                isCharging = false;
+                UpdateChargeUI(false);
+            }
+        }
+
         if (Input.GetMouseButtonDown(1))
         {
             isAiming = true;

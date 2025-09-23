@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2552280415249613788}
   - component: {fileID: 5276697519415282854}
   - component: {fileID: 2113270675414234344}
-  - component: {fileID: 164046885672551179}
+  - component: {fileID: 7080419824482773963}
   m_Layer: 11
   m_Name: bala
   m_TagString: Untagged
@@ -106,7 +106,7 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &164046885672551179
+--- !u!114 &7080419824482773963
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -118,4 +118,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb8fa67a3fb23d540bc77728b766818c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
+  damage: 30
+  speed: 10
+  destroyTime: 8
