@@ -6,7 +6,7 @@ public class PlayerShooting : MonoBehaviour
     [Header("Arco")]
     public Transform shootPoint;
     public GameObject arrowPrefab;
-    public float aimSensitivity = 30f;
+    public float aimSensitivity = 500f;
     public float maxForce = 30f;
     public float chargeSpeed = 20f;
 
@@ -66,7 +66,6 @@ public class PlayerShooting : MonoBehaviour
             Time.deltaTime * bowTransitionSpeed
         );
     }
-
 
     void HandleAim()
     {

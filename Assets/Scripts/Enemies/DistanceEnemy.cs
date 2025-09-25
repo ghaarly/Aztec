@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class DistanceEnemy : Enemy
 {
-
     public void Update()
     {
         if (!PatrolMode)
@@ -27,7 +26,10 @@ public class DistanceEnemy : Enemy
 
             CheckDistanceWaypoint();
         }
-        if (DetectPLayer(transform.position, radius))
+
+        var player = GameManagment.Instance.player;
+
+        if (player != null && !player.IsHidden && DetectPLayer(transform.position, radius))
         {
             PatrolMode = false;
         }
@@ -35,6 +37,7 @@ public class DistanceEnemy : Enemy
         {
             PatrolMode = true;
         }
+
         if (!PatrolMode && DetectPLayer(transform.position, 10f))
         {
             if (ShootC == null)
@@ -42,10 +45,7 @@ public class DistanceEnemy : Enemy
                 ShootC = StartCoroutine(ShootCoroutine());
             }
         }
-
-
         anim.SetFloat("speed", agent.velocity.magnitude);
-
     }
     public Transform shootPos;
     public BulletEnemy bullet;
@@ -65,6 +65,4 @@ public class DistanceEnemy : Enemy
         myBullet.transform.forward = transform.forward;
         Destroy(myBullet.gameObject, 3);
     }
-      
-
 }

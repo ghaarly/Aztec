@@ -19,6 +19,11 @@ public class PlayerBehaviour: MonoBehaviour
     public Transform groundCheck;
     public float checkRadius = 0.25f;
     public float extraGroundDistance = 0.05f;
+    private float originalSpeed;
+    private float originalRunSpeed;
+    private float originalMouseSensitivity;
+    private bool inSlowZone = false;
+
 
     [Header("Collider y Agachado")]
     public float height = 1.8f;
@@ -45,6 +50,7 @@ public class PlayerBehaviour: MonoBehaviour
     private bool inCrouchHideZone = false;
     private bool inAutoHideZone = false;
     public bool IsCrouching => isCrouching;
+    public bool IsHidden => (inCrouchHideZone && isCrouching) || inAutoHideZone;
 
 
     [Header("Interacción")]
@@ -209,6 +215,31 @@ public class PlayerBehaviour: MonoBehaviour
             }
         }
     }
+    public void EnterSlowZone(float speedMultiplier, float sensitivityLoss)
+    {
+        if (inSlowZone) return; 
+
+        inSlowZone = true;
+
+        originalSpeed = speed;
+        originalRunSpeed = runSpeed;
+        originalMouseSensitivity = mouseSensitivity;
+        speed *= speedMultiplier;
+        runSpeed *= speedMultiplier;
+        mouseSensitivity -= sensitivityLoss;
+
+        mouseSensitivity = Mathf.Max(1f, mouseSensitivity); 
+    }
+    public void ExitSlowZone()
+    {
+        if (!inSlowZone) return;
+        inSlowZone = false;
+
+        speed = originalSpeed;
+        runSpeed = originalRunSpeed;
+        mouseSensitivity = originalMouseSensitivity;
+    }
+
     void OnTriggerEnter(Collider other)
     {
         if (IsInLayerMask(other.gameObject, canHide))

@@ -8,8 +8,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private int enemyLife;
     [SerializeField] public NavMeshAgent agent;
     [SerializeField] protected float radius;
-
-
+    public bool IsAlive => enemyLife > 0;
 
     public void TakeDamage()
     {

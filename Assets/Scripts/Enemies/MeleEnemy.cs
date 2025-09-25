@@ -5,10 +5,7 @@ using UnityEngine;
 
 public class MeleEnemy : Enemy
 {
-    
     private Coroutine AttackC;
-
-
     public void Update()
     {
         if (!PatrolMode)
@@ -24,10 +21,12 @@ public class MeleEnemy : Enemy
             {
                 PatrolC = StartCoroutine(PatrolCoroutine());
             }
-
             CheckDistanceWaypoint();
         }
-        if (DetectPLayer(transform.position, radius))
+
+        var player = GameManagment.Instance.player;
+
+        if (player != null && !player.IsHidden && DetectPLayer(transform.position, radius))
         {
             PatrolMode = false;
         }
@@ -35,15 +34,13 @@ public class MeleEnemy : Enemy
         {
             PatrolMode = true;
         }
-        if (!PatrolMode && DetectPLayer(transform.position, 2f))
+        if (!PatrolMode && !player.IsHidden && DetectPLayer(transform.position, 2f))
         {
             if (AttackC == null)
             {
                 AttackC = StartCoroutine(Attack());
             }
         }
-
-
         anim.SetFloat("speed", agent.velocity.magnitude);
         
     }
