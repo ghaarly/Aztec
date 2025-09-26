@@ -6,7 +6,7 @@ public class Menu : MonoBehaviour
 {
     public CanvasGroup titulo;
     public CanvasGroup botons;
-    public CanvasGroup credits;
+    public CanvasGroup controls;
     public float fadeTime = 1f;
 
     private bool hasClicked = false;
@@ -21,9 +21,9 @@ public class Menu : MonoBehaviour
         botons.interactable = false;
         botons.blocksRaycasts = false;
 
-        credits.alpha = 0f;
-        credits.interactable = false;
-        credits.blocksRaycasts = false;
+        controls.alpha = 0f;
+        controls.interactable = false;
+        controls.blocksRaycasts = false;
     }
 
     void Update()
@@ -44,14 +44,14 @@ public class Menu : MonoBehaviour
         botons.blocksRaycasts = true;
     }
 
-    public void Credits()
+    public void Controls()
     {
-        StartCoroutine(ChangeGroup(botons, credits));
+        StartCoroutine(ChangeGroup(botons, controls));
     }
 
     public void GoMenu()
     {
-        StartCoroutine(ChangeGroup(credits, botons));
+        StartCoroutine(ChangeGroup(controls, botons));
     }
 
     IEnumerator ChangeGroup(CanvasGroup prev, CanvasGroup next)
@@ -62,7 +62,8 @@ public class Menu : MonoBehaviour
         yield return StartCoroutine(FadeCanva(next, 0f, 1f));
         next.interactable = true;
         next.blocksRaycasts = true;
-    }    IEnumerator FadeCanva(CanvasGroup canvasGroup, float startAlpha, float endAlpha)
+    }
+    IEnumerator FadeCanva(CanvasGroup canvasGroup, float startAlpha, float endAlpha)
 
     {
         float time = 0f;
