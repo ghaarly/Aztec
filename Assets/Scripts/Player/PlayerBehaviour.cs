@@ -24,7 +24,6 @@ public class PlayerBehaviour: MonoBehaviour
     private float originalMouseSensitivity;
     private bool inSlowZone = false;
 
-
     [Header("Collider y Agachado")]
     public float height = 1.8f;
     public float crouchHeight = 1.0f;
@@ -51,6 +50,8 @@ public class PlayerBehaviour: MonoBehaviour
     private bool inAutoHideZone = false;
     public bool IsCrouching => isCrouching;
     public bool IsHidden => (inCrouchHideZone && isCrouching) || inAutoHideZone;
+    private int crouchHideZoneCount = 0;
+    private int autoHideZoneCount = 0;
 
 
     [Header("Interacción")]
@@ -239,46 +240,48 @@ public class PlayerBehaviour: MonoBehaviour
         runSpeed = originalRunSpeed;
         mouseSensitivity = originalMouseSensitivity;
     }
-
     void OnTriggerEnter(Collider other)
     {
         if (IsInLayerMask(other.gameObject, canHide))
         {
-            inCrouchHideZone = true;
+            crouchHideZoneCount++;
             UpdateInvisibility();
         }
 
         if (IsInLayerMask(other.gameObject, autoHide))
         {
-            inAutoHideZone = true;
+            autoHideZoneCount++;
             UpdateInvisibility();
         }
     }
-
     void OnTriggerExit(Collider other)
     {
         if (IsInLayerMask(other.gameObject, canHide))
         {
-            inCrouchHideZone = false;
+            crouchHideZoneCount = Mathf.Max(0, crouchHideZoneCount - 1);
             UpdateInvisibility();
         }
 
         if (IsInLayerMask(other.gameObject, autoHide))
         {
-            inAutoHideZone = false;
+            autoHideZoneCount = Mathf.Max(0, autoHideZoneCount - 1);
             UpdateInvisibility();
         }
     }
 
     void UpdateInvisibility()
     {
-        bool shouldHide = (inCrouchHideZone && isCrouching) || inAutoHideZone;
+        bool inCrouchHide = (crouchHideZoneCount > 0 && isCrouching);
+        bool inAutoHide = autoHideZoneCount > 0;
+
+        bool shouldHide = inCrouchHide || inAutoHide;
 
         if (hidingEffect != null)
         {
             hidingEffect.SetActive(shouldHide);
         }
     }
+
 
     bool IsInLayerMask(GameObject obj, LayerMask mask)
     {
