@@ -20642,7 +20642,7 @@ PrefabInstance:
     - target: {fileID: 5856164235416459126, guid: d6f9f9ce5098bd84095650c24139ab63, type: 3}
       propertyPath: Chargingsound.Array.data[0]
       value: 
-      objectReference: {fileID: 8300000, guid: 741a408fc964a3845bacc6f2f003a68e, type: 3}
+      objectReference: {fileID: 8300000, guid: 07c488dda18fdb0429bc9a8214fe90f1, type: 3}
     - target: {fileID: 8960927221914742699, guid: d6f9f9ce5098bd84095650c24139ab63, type: 3}
       propertyPath: m_Name
       value: Jugador
