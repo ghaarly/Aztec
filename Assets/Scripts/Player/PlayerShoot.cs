@@ -117,6 +117,7 @@ public class PlayerShooting : MonoBehaviour
                 isCharging = true;
                 currentForce = 0f;
                 UpdateChargeUI(true);
+                playChargingsound();
             }
 
             if (isCharging && Input.GetMouseButton(0))
@@ -148,6 +149,7 @@ public class PlayerShooting : MonoBehaviour
             arrowRb.velocity = shootPoint.forward * force;
         }
         currentArrows--;
+        playshootsound();
         UpdateArrowUI();
     }
     public void UpdateArrowUI()
@@ -180,4 +182,20 @@ public class PlayerShooting : MonoBehaviour
             chargeSlider.value = currentForce / maxForce;
         }
     }
+    public AudioSource source;
+    public AudioClip[] Shootsounds = new AudioClip[0];
+    public AudioClip[] Chargingsound = new AudioClip[0];
+
+    public void playshootsound()
+    {
+        if (source == null || Shootsounds.Length == 0) return;
+        source.PlayOneShot(Shootsounds[Random.Range(0, Shootsounds.Length)]);
+    }
+    public void playChargingsound()
+    {
+        if (source == null || Chargingsound.Length == 0) return;
+        source.PlayOneShot(Chargingsound[Random.Range(0, Chargingsound.Length)]);
+    }
+
 }
+

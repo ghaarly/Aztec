@@ -47,8 +47,20 @@ public class MeleEnemy : Enemy
     public IEnumerator Attack()
     {
         anim.SetTrigger("Attack");
-        yield return new WaitForSeconds(1f);
+        PlayAttacksounds();
+         yield return new WaitForSeconds(1f);
         AttackC=null;
+
     }
+
+    public AudioSource source;
+    public AudioClip[] Attacksounds = new AudioClip[0];
+
+    public void PlayAttacksounds()
+    {
+        if (source == null || Attacksounds.Length == 0) return;
+        source.PlayOneShot(Attacksounds[Random.Range(0, Attacksounds.Length)]);
+    }
+
 }
 

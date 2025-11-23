@@ -62,7 +62,18 @@ public class DistanceEnemy : Enemy
     {
         anim.SetTrigger("Attack");
         BulletEnemy myBullet = Instantiate(bullet, shootPos.position, Quaternion.identity);
+        playshootsound();
         myBullet.transform.forward = transform.forward;
         Destroy(myBullet.gameObject, 3);
+    }
+
+
+    public AudioSource source;
+    public AudioClip[] Shootsounds = new AudioClip[0];
+
+    public void playshootsound()
+    {
+        if (source == null || Shootsounds.Length == 0) return;
+        source.PlayOneShot(Shootsounds[Random.Range(0, Shootsounds.Length)]);
     }
 }

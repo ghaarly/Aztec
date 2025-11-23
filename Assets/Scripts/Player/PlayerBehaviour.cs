@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class PlayerBehaviour: MonoBehaviour
+public class PlayerBehaviour : MonoBehaviour
 {
     [Header("Vida")]
     [SerializeField] private int maxLife;
@@ -65,7 +65,7 @@ public class PlayerBehaviour: MonoBehaviour
     private Vector3 escaladaFin;
     private float velocidadEscalada = 2f;
     private float progresoEscalada = 0f;
-    
+
 
     private Rigidbody rb;
     private CapsuleCollider capsule;
@@ -75,14 +75,14 @@ public class PlayerBehaviour: MonoBehaviour
     private float yaw = 0f;
     private float pitch = 0f;
     private float stamina;
-    private bool canRun = true;    
-  
+    private bool canRun = true;
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         capsule = GetComponent<CapsuleCollider>();
         stamina = maxStamina;
-        currentLife = maxLife; 
+        currentLife = maxLife;
 
         if (lifeImage != null)
         {
@@ -126,12 +126,24 @@ public class PlayerBehaviour: MonoBehaviour
     {
         isGrounded = Physics.CheckSphere(groundCheck.position, checkRadius + extraGroundDistance, groundMask);
     }
+    
+    private float walktimer = 0f;
+
     void HandleMovement()
     {
         float h = Input.GetAxis("Horizontal");
         float v = Input.GetAxis("Vertical");
         moveInput = transform.right * h + transform.forward * v;
-
+        if(h != 0 || v != 0)
+        {
+            if (walktimer < 0.5f) walktimer += Time.deltaTime;
+            else if (walktimer >= 0.5f)
+            {
+                playstepsound();
+                walktimer = 0f;
+            }
+        }
+       
         float targetSpeed = speed;
 
         if (isCrouching)
@@ -218,7 +230,7 @@ public class PlayerBehaviour: MonoBehaviour
     }
     public void EnterSlowZone(float speedMultiplier, float sensitivityLoss)
     {
-        if (inSlowZone) return; 
+        if (inSlowZone) return;
 
         inSlowZone = true;
 
@@ -229,7 +241,7 @@ public class PlayerBehaviour: MonoBehaviour
         runSpeed *= speedMultiplier;
         mouseSensitivity -= sensitivityLoss;
 
-        mouseSensitivity = Mathf.Max(1f, mouseSensitivity); 
+        mouseSensitivity = Mathf.Max(1f, mouseSensitivity);
     }
     public void ExitSlowZone()
     {
@@ -313,7 +325,7 @@ public class PlayerBehaviour: MonoBehaviour
     {
         Debug.Log("Recibio daño: " + damage);
         currentLife -= damage;
-        currentLife = Mathf.Clamp(currentLife, 0, maxLife); 
+        currentLife = Mathf.Clamp(currentLife, 0, maxLife);
         UpdateHealthBar();
 
         if (currentLife <= 0)
@@ -324,7 +336,7 @@ public class PlayerBehaviour: MonoBehaviour
     }
     void UpdateHealthBar()
     {
-        float fillAmount = (float)currentLife / maxLife;        
+        float fillAmount = (float)currentLife / maxLife;
         lifeImage.fillAmount = fillAmount;
     }
     void OnDrawGizmosSelected()
@@ -333,6 +345,21 @@ public class PlayerBehaviour: MonoBehaviour
         {
             Gizmos.color = Color.green;
             Gizmos.DrawWireSphere(groundCheck.position, checkRadius + extraGroundDistance);
+        }
+    }
+
+    public AudioSource source;
+    public AudioClip[]stepssounds = new AudioClip[0];
+    public AudioClip[]SlowStepsounds = new AudioClip[0];
+    public void playstepsound()
+    {
+        if (inSlowZone)
+        {
+            source.PlayOneShot(SlowStepsounds[Random.Range(0, SlowStepsounds.Length)]);
+        }
+        else
+        {
+            source.PlayOneShot(stepssounds[Random.Range(0, stepssounds.Length)]);
         }
     }
 }
