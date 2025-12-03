@@ -193,8 +193,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2808698764787077862}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0.0074176053, z: 0, w: 0.9999725}
-  m_LocalPosition: {x: 0, y: 0.36, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.36000013, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -204,7 +204,7 @@ Transform:
   - {fileID: 3996288838923111312}
   - {fileID: 5728936745427552885}
   m_Father: {fileID: 2490320819487793547}
-  m_LocalEulerAnglesHint: {x: 0, y: 0.85, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!20 &5253586180936706678
 Camera:
   m_ObjectHideFlags: 0
@@ -689,8 +689,8 @@ GameObject:
   - component: {fileID: 2859444699229080477}
   - component: {fileID: 4496003183907631116}
   - component: {fileID: 5365761615756095551}
-  - component: {fileID: 2791313216330855433}
   - component: {fileID: 5856164235416459126}
+  - component: {fileID: 2791313216330855433}
   m_Layer: 3
   m_Name: Jugador - Copy
   m_TagString: Player
@@ -815,6 +815,43 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &5856164235416459126
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8960927221914742699}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 410d99d4d79f0044d9442cee32ec80eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shootPoint: {fileID: 3996288838923111312}
+  arrowPrefab: {fileID: 3573574122769822183, guid: e35261b10f0417144b7ccbdad16986f0, type: 3}
+  aimSensitivity: 55
+  maxForce: 25
+  chargeSpeed: 10
+  bowModel: {fileID: 4956938379596140751}
+  aimPosition: {fileID: 8049671333227220906}
+  restPosition: {fileID: 5835321432848491766}
+  bowTransitionSpeed: 5
+  crouchPosition: {fileID: 5679295408216578078}
+  maxArrows: 5
+  currentArrows: 5
+  arrowIcons:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  chargeUIContainer: {fileID: 0}
+  chargeSlider: {fileID: 0}
+  cameraTransform: {fileID: 7026993849122082571}
+  playerBehaviour: {fileID: 2791313216330855433}
+  source: {fileID: 0}
+  Shootsounds: []
+  Chargingsound: []
 --- !u!114 &2791313216330855433
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -865,40 +902,9 @@ MonoBehaviour:
   interactMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &5856164235416459126
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8960927221914742699}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 410d99d4d79f0044d9442cee32ec80eb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shootPoint: {fileID: 3996288838923111312}
-  arrowPrefab: {fileID: 3573574122769822183, guid: e35261b10f0417144b7ccbdad16986f0, type: 3}
-  aimSensitivity: 55
-  maxForce: 25
-  chargeSpeed: 10
-  bowModel: {fileID: 4956938379596140751}
-  aimPosition: {fileID: 8049671333227220906}
-  restPosition: {fileID: 5835321432848491766}
-  bowTransitionSpeed: 5
-  crouchPosition: {fileID: 5679295408216578078}
-  maxArrows: 5
-  currentArrows: 5
-  arrowIcons:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  chargeUIContainer: {fileID: 0}
-  chargeSlider: {fileID: 0}
-  cameraTransform: {fileID: 7026993849122082571}
-  playerBehaviour: {fileID: 2791313216330855433}
+  source: {fileID: 0}
+  stepssounds: []
+  SlowStepsounds: []
 --- !u!1001 &5191521037117369758
 PrefabInstance:
   m_ObjectHideFlags: 0

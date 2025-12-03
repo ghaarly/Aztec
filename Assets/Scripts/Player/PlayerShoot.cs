@@ -35,6 +35,10 @@ public class PlayerShooting : MonoBehaviour
     private bool isCharging = false;
     private float originalSensitivity;
 
+    void Start()
+    {
+        UpdateChargeUI(false);
+    }
     void Update()
     {
         HandleAim();

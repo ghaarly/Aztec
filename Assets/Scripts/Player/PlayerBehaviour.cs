@@ -93,7 +93,10 @@ public class PlayerBehaviour : MonoBehaviour
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
         }
+        yaw = transform.eulerAngles.y;
+        pitch = cameraTransform.localEulerAngles.x;
     }
+
     void Update()
     {
         if (enEscalada)
