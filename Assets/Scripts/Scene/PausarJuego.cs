@@ -34,6 +34,13 @@ public class PausarJuego : MonoBehaviour
             }
 
         }
+        if (Input.GetKeyDown(KeyCode.R)&& juegopausado)
+        {
+            var currentscene = SceneManager.GetActiveScene();
+            Reanudar();
+            SceneManager.LoadScene(currentscene.name);
+        }
+
     }
 
     public void Reanudar(  )

@@ -137,7 +137,7 @@ public class PlayerBehaviour : MonoBehaviour
         float h = Input.GetAxis("Horizontal");
         float v = Input.GetAxis("Vertical");
         moveInput = transform.right * h + transform.forward * v;
-        if(h != 0 || v != 0)
+        if(h != 0 || v != 0 && isGrounded)
         {
             if (walktimer < 0.5f) walktimer += Time.deltaTime;
             else if (walktimer >= 0.5f)

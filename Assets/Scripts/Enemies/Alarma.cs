@@ -6,6 +6,7 @@ public class Alarma : MonoBehaviour
     [SerializeField] private Enemy campanero;
 
     [Header("Enemigos")]
+    [SerializeField] private Transform[] Enemies;
     [SerializeField] private Transform[] enemySpawnPoints;
     [SerializeField] private GameObject enemyPrefab;
 
@@ -61,9 +62,13 @@ public class Alarma : MonoBehaviour
     {
         if (spawnEnemies && !enemiesSpawned)
         {
-            foreach (Transform point in enemySpawnPoints)
+          /*  foreach (Transform point in enemySpawnPoints)
             {
                 Instantiate(enemyPrefab, point.position, point.rotation);
+            }*/
+          foreach (var x in Enemies)
+            {
+                x.gameObject.SetActive(true);
             }
             enemiesSpawned = true;
         }
