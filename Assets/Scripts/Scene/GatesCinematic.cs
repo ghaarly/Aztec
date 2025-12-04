@@ -8,6 +8,12 @@ public class GatesCinematic : MonoBehaviour
 {
     [Header("Enemigos / Objetos a eliminar")]
     public List<GameObject> targets;
+
+    [Header("UI")]
+    public Text enemyCounterText; // <-- CONTADOR VISUAL
+
+    private int enemiesRemaining;  // <-- CONTADOR INTERNO
+
     [Header("Jugador")]
     public GameObject player;
     public MonoBehaviour[] playerControlScripts;
@@ -16,10 +22,12 @@ public class GatesCinematic : MonoBehaviour
     [Header("Objetos")]
     public GameObject Door;
     public GameObject Deteails;
-    public GameObject objectToActivate;      
+    public GameObject objectToActivate;
+
     [Header("Cámaras")]
     public Camera gameCamera;
     public Camera cinematicCamera;
+
     [Header("Fade")]
     public Image fadeImage;
     public float fadeTime = 1f;
@@ -28,6 +36,7 @@ public class GatesCinematic : MonoBehaviour
     public Animator gateAnim;
     public string animationTrigger = "OpenGate";
     public float secondsToWait = 3f;
+
     [Header("Siguiente escena")]
     public string nextSceneName;
 
@@ -40,6 +49,10 @@ public class GatesCinematic : MonoBehaviour
 
         fadeImage.color = new Color(0, 0, 0, 0);
 
+        // INICIA EL CONTADOR
+        enemiesRemaining = targets.Count;
+        UpdateEnemyCounter();
+
         StartCoroutine(CheckTargetsRoutine());
     }
 
@@ -49,21 +62,39 @@ public class GatesCinematic : MonoBehaviour
         {
             bool allDestroyed = true;
 
-            foreach (var t in targets)
+            for (int i = 0; i < targets.Count; i++)
             {
-                if (t != null)
+                if (targets[i] != null)
                 {
                     allDestroyed = false;
-                    break;
+                }
+                else
+                {
+                    if (targets[i] != null)
+                    {
+                        enemiesRemaining--;
+                        UpdateEnemyCounter();
+                    }
                 }
             }
 
-            if (allDestroyed)
+            targets.RemoveAll(t => t == null);
+
+            if (targets.Count == 0 && !sequenceStarted)
             {
                 sequenceStarted = true;
                 StartCoroutine(EndSequence());
             }
-            yield return new WaitForSeconds(0.5f);
+
+            yield return new WaitForSeconds(0.2f);
+        }
+    }
+
+    void UpdateEnemyCounter()
+    {
+        if (enemyCounterText != null)
+        {
+            enemyCounterText.text = "" + enemiesRemaining;
         }
     }
 
@@ -71,6 +102,7 @@ public class GatesCinematic : MonoBehaviour
     {
         foreach (var script in playerControlScripts)
             script.enabled = false;
+
         if (gameCanvas != null)
             gameCanvas.enabled = false;
 
@@ -79,13 +111,9 @@ public class GatesCinematic : MonoBehaviour
         cinematicCamera.gameObject.SetActive(true);
         yield return StartCoroutine(FadeFromBlack());
 
-        if (Door != null)
-            Door.SetActive(false);
-
-        if (Deteails != null)
-            Deteails.SetActive(false);
-        if (objectToActivate != null)
-            objectToActivate.SetActive(true);
+        if (Door != null) Door.SetActive(false);
+        if (Deteails != null) Deteails.SetActive(false);
+        if (objectToActivate != null) objectToActivate.SetActive(true);
 
         gateAnim.SetTrigger(animationTrigger);
         yield return new WaitForSeconds(secondsToWait);
