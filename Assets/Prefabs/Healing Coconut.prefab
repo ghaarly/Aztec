@@ -241,19 +241,39 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 653014902607363593, guid: 786c43f51d2474b41ad066cd0b62ebe3, type: 3}
       propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7762571666396762523, guid: 786c43f51d2474b41ad066cd0b62ebe3, type: 3}
+      propertyPath: simulationSpeed
+      value: 0.72
+      objectReference: {fileID: 0}
+    - target: {fileID: 7762571666396762523, guid: 786c43f51d2474b41ad066cd0b62ebe3, type: 3}
+      propertyPath: moveWithTransform
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7762571666396762523, guid: 786c43f51d2474b41ad066cd0b62ebe3, type: 3}
+      propertyPath: CollisionModule.type
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7762571666396762523, guid: 786c43f51d2474b41ad066cd0b62ebe3, type: 3}
+      propertyPath: CollisionModule.enabled
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7762571666396762523, guid: 786c43f51d2474b41ad066cd0b62ebe3, type: 3}
+      propertyPath: EmissionModule.rateOverTime.scalar
+      value: 3.37
       objectReference: {fileID: 0}
     - target: {fileID: 8700913248138663162, guid: 786c43f51d2474b41ad066cd0b62ebe3, type: 3}
       propertyPath: m_LocalScale.x
-      value: 1.0720532
+      value: 0.9488743
       objectReference: {fileID: 0}
     - target: {fileID: 8700913248138663162, guid: 786c43f51d2474b41ad066cd0b62ebe3, type: 3}
       propertyPath: m_LocalScale.y
-      value: 1.0720532
+      value: 0.9488743
       objectReference: {fileID: 0}
     - target: {fileID: 8700913248138663162, guid: 786c43f51d2474b41ad066cd0b62ebe3, type: 3}
       propertyPath: m_LocalScale.z
-      value: 1.0720532
+      value: 0.9488743
       objectReference: {fileID: 0}
     - target: {fileID: 8700913248138663162, guid: 786c43f51d2474b41ad066cd0b62ebe3, type: 3}
       propertyPath: m_LocalPosition.x
@@ -261,11 +281,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8700913248138663162, guid: 786c43f51d2474b41ad066cd0b62ebe3, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.072478294
+      value: 0.067954
       objectReference: {fileID: 0}
     - target: {fileID: 8700913248138663162, guid: 786c43f51d2474b41ad066cd0b62ebe3, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.57982254
+      value: 0.54033
       objectReference: {fileID: 0}
     - target: {fileID: 8700913248138663162, guid: 786c43f51d2474b41ad066cd0b62ebe3, type: 3}
       propertyPath: m_LocalRotation.w
@@ -295,16 +315,45 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3272449788013141711, guid: 786c43f51d2474b41ad066cd0b62ebe3, type: 3}
+    - {fileID: 5552678432649166350, guid: 786c43f51d2474b41ad066cd0b62ebe3, type: 3}
+    - {fileID: 5753161196697355291, guid: 786c43f51d2474b41ad066cd0b62ebe3, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 653014902607363593, guid: 786c43f51d2474b41ad066cd0b62ebe3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1478291479256342016}
   m_SourcePrefab: {fileID: 100100000, guid: 786c43f51d2474b41ad066cd0b62ebe3, type: 3}
 --- !u!1 &4370886079036693960 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 653014902607363593, guid: 786c43f51d2474b41ad066cd0b62ebe3, type: 3}
   m_PrefabInstance: {fileID: 3866190896980304833}
   m_PrefabAsset: {fileID: 0}
+--- !u!136 &1478291479256342016
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4370886079036693960}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.43
+  m_Height: 1.87
+  m_Direction: 2
+  m_Center: {x: 0, y: 0, z: -0.32061583}
 --- !u!4 &5555368660552890171 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8700913248138663162, guid: 786c43f51d2474b41ad066cd0b62ebe3, type: 3}

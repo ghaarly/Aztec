@@ -1,78 +1,110 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.Collections;
 
 public class Menu : MonoBehaviour
 {
-    public CanvasGroup titulo;
-    public CanvasGroup botons;
-    public CanvasGroup controls;
-    public float fadeTime = 1f;
+    [Header("Canvas Groups")]
+    public CanvasGroup mainMenu;
+    public CanvasGroup optionsMenu;
+    public CanvasGroup controlsMenu;
+    public CanvasGroup creditsMenu;
+    public CanvasGroup juegoMenu;
 
-    private bool hasClicked = false;
+    public float fadeTime = 0.4f;
+
+    private CanvasGroup currentGroup;
 
     void Start()
     {
-        titulo.alpha = 1f;
-        titulo.interactable = true;
-        titulo.blocksRaycasts = true;
-
-        botons.alpha = 0f;
-        botons.interactable = false;
-        botons.blocksRaycasts = false;
-
-        controls.alpha = 0f;
-        controls.interactable = false;
-        controls.blocksRaycasts = false;
+        ShowOnly(mainMenu);
     }
 
-    void Update()
+    void ShowOnly(CanvasGroup group)
     {
-        if (Input.GetMouseButtonDown(0) && !hasClicked)
+        SetGroupState(mainMenu, false);
+        SetGroupState(optionsMenu, false);
+        SetGroupState(controlsMenu, false);
+        SetGroupState(creditsMenu, false);
+
+        group.alpha = 1;
+        group.interactable = true;
+        group.blocksRaycasts = true;
+
+        currentGroup = group;
+    }
+
+    IEnumerator Swap(CanvasGroup next)
+    {
+        if (next == currentGroup) yield break;
+
+        CanvasGroup prev = currentGroup;
+
+        SetInteractable(prev, false);
+        yield return StartCoroutine(Fade(prev, 1, 0));
+
+        yield return StartCoroutine(Fade(next, 0, 1));
+        SetInteractable(next, true);
+
+        currentGroup = next;
+    }
+
+    IEnumerator Fade(CanvasGroup cg, float a, float b)
+    {
+        float t = 0;
+        while (t < fadeTime)
         {
-            hasClicked = true;
-            StartCoroutine(ToMenu());
-        }
-    }
-
-    IEnumerator ToMenu()
-    {
-        yield return StartCoroutine(FadeCanva(titulo, 1f, 0f));
-        yield return StartCoroutine(FadeCanva(botons, 0f, 1f));
-
-        botons.interactable = true;
-        botons.blocksRaycasts = true;
-    }
-
-    public void Controls()
-    {
-        StartCoroutine(ChangeGroup(botons, controls));
-    }
-
-    public void GoMenu()
-    {
-        StartCoroutine(ChangeGroup(controls, botons));
-    }
-
-    IEnumerator ChangeGroup(CanvasGroup prev, CanvasGroup next)
-    {
-        prev.interactable = false;
-        prev.blocksRaycasts = false;
-        yield return StartCoroutine(FadeCanva(prev, 1f, 0f));
-        yield return StartCoroutine(FadeCanva(next, 0f, 1f));
-        next.interactable = true;
-        next.blocksRaycasts = true;
-    }
-    IEnumerator FadeCanva(CanvasGroup canvasGroup, float startAlpha, float endAlpha)
-
-    {
-        float time = 0f;
-        while (time < fadeTime)
-        {
-            time += Time.deltaTime;
-            canvasGroup.alpha = Mathf.Lerp(startAlpha, endAlpha, time / fadeTime);
+            t += Time.deltaTime;
+            cg.alpha = Mathf.Lerp(a, b, t / fadeTime);
             yield return null;
         }
-        canvasGroup.alpha = endAlpha;
+        cg.alpha = b;
+    }
+
+    void SetGroupState(CanvasGroup g, bool state)
+    {
+        g.alpha = state ? 1 : 0;
+        g.interactable = state;
+        g.blocksRaycasts = state;
+    }
+
+    void SetInteractable(CanvasGroup g, bool value)
+    {
+        g.interactable = value;
+        g.blocksRaycasts = value;
+    }
+    public void BtnPlay()
+    {
+        SceneManager.LoadScene("Nivel 1");
+    }
+    public void BtnTutorial()
+    {
+        SceneManager.LoadScene("Juego");
+    }
+    public void BtnMenuJuego()
+    {
+        StartCoroutine(Swap(juegoMenu));
+    }
+
+    public void BtnControls()
+    {
+        StartCoroutine(Swap(controlsMenu));
+    }
+    public void BtnOptions()
+    {
+        StartCoroutine(Swap(optionsMenu));
+    }
+    public void BtnCredits()
+    {
+        StartCoroutine(Swap(creditsMenu));
+    }
+    public void BtnBack()
+    {
+        StartCoroutine(Swap(mainMenu));
+    }
+    public void OnVolumeChanged(float v)
+    {
+        AudioListener.volume = v;
     }
 }

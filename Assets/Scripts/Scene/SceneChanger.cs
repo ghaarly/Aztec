@@ -11,4 +11,9 @@ public class SceneChanger : MonoBehaviour
     {
         Application.Quit();
     }
+    public void ToggleFullscreen()
+    {
+        Screen.fullScreen = !Screen.fullScreen;
+    }
+
 }
