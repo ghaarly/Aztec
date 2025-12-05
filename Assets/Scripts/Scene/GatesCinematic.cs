@@ -10,10 +10,9 @@ public class GatesCinematic : MonoBehaviour
     public List<GameObject> targets;
 
     [Header("UI")]
-    public Text enemyCounterText; // <-- CONTADOR VISUAL
+    public Text enemyCounterText;
 
-    private int enemiesRemaining;  // <-- CONTADOR INTERNO
-
+    private int enemiesRemaining;
     [Header("Jugador")]
     public GameObject player;
     public MonoBehaviour[] playerControlScripts;
@@ -49,7 +48,6 @@ public class GatesCinematic : MonoBehaviour
 
         fadeImage.color = new Color(0, 0, 0, 0);
 
-        // INICIA EL CONTADOR
         enemiesRemaining = targets.Count;
         UpdateEnemyCounter();
 
@@ -60,25 +58,16 @@ public class GatesCinematic : MonoBehaviour
     {
         while (!sequenceStarted)
         {
-            bool allDestroyed = true;
-
-            for (int i = 0; i < targets.Count; i++)
+            for (int i = targets.Count - 1; i >= 0; i--)
             {
-                if (targets[i] != null)
+                if (targets[i] == null)
                 {
-                    allDestroyed = false;
-                }
-                else
-                {
-                    if (targets[i] != null)
-                    {
-                        enemiesRemaining--;
-                        UpdateEnemyCounter();
-                    }
+                    enemiesRemaining--;
+                    UpdateEnemyCounter();
+
+                    targets.RemoveAt(i);
                 }
             }
-
-            targets.RemoveAll(t => t == null);
 
             if (targets.Count == 0 && !sequenceStarted)
             {
@@ -89,7 +78,6 @@ public class GatesCinematic : MonoBehaviour
             yield return new WaitForSeconds(0.2f);
         }
     }
-
     void UpdateEnemyCounter()
     {
         if (enemyCounterText != null)
