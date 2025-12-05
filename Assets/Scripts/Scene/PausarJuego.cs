@@ -40,6 +40,12 @@ public class PausarJuego : MonoBehaviour
             Reanudar();
             SceneManager.LoadScene(currentscene.name);
         }
+        if (Input.GetKeyDown(KeyCode.F) && juegopausado)
+        {
+            var currentscene = SceneManager.GetActiveScene();
+            Reanudar();
+            SceneManager.LoadScene("Menu");
+        }
 
     }
 
